@@ -25,5 +25,5 @@ pub struct Donar {
 pub struct Party {
     pub id: i32,
     pub name: String,
-    pub parent: Option<String>,
+    pub parent_id: Option<i64>,
 }
