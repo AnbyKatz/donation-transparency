@@ -1,29 +1,40 @@
 use serde::Serialize;
+use sqlx::FromRow;
 
-pub static DONATION_TABLE: &str = "donations";
-pub static DONAR_TABLE: &str = "donar";
-pub static PARTY_TABLE: &str = "party";
+#[derive(Debug, Serialize, FromRow)]
+pub struct Branch {
+    pub id: i32,
+    pub name: String,
+    pub party_id: i32,
+}
 
-#[derive(Serialize, sqlx::FromRow)]
+#[derive(Debug, Serialize, FromRow)]
+pub struct Donar {
+    pub id: i32,
+    pub name: String,
+    pub industry_id: i32,
+}
+
+#[derive(Debug, Serialize, FromRow)]
+pub struct Industry {
+    pub id: i32,
+    pub name: String,
+}
+
+#[derive(Debug, Serialize, FromRow)]
+pub struct Party {
+    pub id: i32,
+    pub name: Option<String>,
+}
+
+#[derive(Debug, Serialize, FromRow)]
+/// This is NOT an exact copy of the table as
+/// this table is almost always used with a join
+/// to reconstruct the names
 pub struct Donation {
     pub id: i32,
     pub year: String,
     pub amount: i64,
-    pub party_name: String,
+    pub branch_name: String,
     pub donar_name: String,
-}
-
-#[derive(Serialize, sqlx::FromRow)]
-pub struct Donar {
-    pub id: i32,
-    pub name: String,
-    pub industry: Option<String>,
-    pub parent: Option<String>,
-}
-
-#[derive(Serialize, sqlx::FromRow)]
-pub struct Party {
-    pub id: i32,
-    pub name: String,
-    pub parent_id: Option<i64>,
 }
