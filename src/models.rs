@@ -12,7 +12,7 @@ pub struct Branch {
 pub struct Donar {
     pub id: i32,
     pub name: String,
-    pub industry_id: i32,
+    pub industry_id: Option<i32>,
 }
 
 #[derive(Debug, Serialize, FromRow)]

@@ -1,7 +1,7 @@
 use sqlx::PgPool;
 use std::collections::HashMap;
 
-use crate::models::{Donation, Party};
+use crate::models::{Donar, Donation, Party};
 
 /* Tables to query from */
 static DONATION_TABLE: &str = "donation";
@@ -18,7 +18,7 @@ fn all_parties_query() -> String {
 }
 
 fn all_donars_query() -> String {
-    format!("SELECT name FROM {DONAR_TABLE}")
+    format!("SELECT * FROM {DONAR_TABLE}")
 }
 
 fn all_financial_years_query() -> String {
@@ -57,7 +57,7 @@ pub async fn get_all_branch_ids(pool: &PgPool, party_id: i32) -> Result<Vec<i32>
 /// Grabs all party names, these are the top level parents that have
 /// multiple branches and is generally used in order to select a specific
 /// party to see their aggregate donations
-async fn get_all_parties(pool: &PgPool) -> Result<Vec<Party>, sqlx::Error> {
+pub async fn get_all_parties(pool: &PgPool) -> Result<Vec<Party>, sqlx::Error> {
     let query = all_parties_query();
     let parties: Vec<Party> = sqlx::query_as::<_, Party>(&query).fetch_all(pool).await?;
     Ok(parties)
@@ -65,11 +65,9 @@ async fn get_all_parties(pool: &PgPool) -> Result<Vec<Party>, sqlx::Error> {
 
 /// Grabs all the donars names, used if you want to see how much a specific
 /// donar donated and to which parties
-pub async fn get_all_donars(pool: &PgPool) -> Result<Vec<String>, sqlx::Error> {
+pub async fn get_all_donars(pool: &PgPool) -> Result<Vec<Donar>, sqlx::Error> {
     let query = all_donars_query();
-    let donars: Vec<String> = sqlx::query_scalar::<_, String>(&query)
-        .fetch_all(pool)
-        .await?;
+    let donars: Vec<Donar> = sqlx::query_as::<_, Donar>(&query).fetch_all(pool).await?;
     Ok(donars)
 }
 

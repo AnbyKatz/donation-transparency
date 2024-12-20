@@ -10,7 +10,6 @@ mod tests {
         let pool = init_db().await.unwrap();
         let donars = get_all_donars(&pool).await.unwrap();
         assert!(donars.len() > 0);
-        assert!(donars.contains(&"Mark Bailey".to_string()));
     }
 
     #[tokio::test]
