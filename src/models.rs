@@ -1,4 +1,4 @@
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use sqlx::FromRow;
 
 #[derive(Debug, Serialize, FromRow)]
@@ -24,10 +24,10 @@ pub struct Industry {
 #[derive(Debug, Serialize, FromRow)]
 pub struct Party {
     pub id: i32,
-    pub name: Option<String>,
+    pub name: String,
 }
 
-#[derive(Debug, Serialize, FromRow)]
+#[derive(Debug, Serialize, FromRow, Deserialize)]
 /// This is NOT an exact copy of the table as
 /// this table is almost always used with a join
 /// to reconstruct the names
