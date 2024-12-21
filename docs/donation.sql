@@ -3,14 +3,15 @@ DROP TABLE Donation CASCADE;
 DROP TABLE Party CASCADE;
 DROP TABLE Branch CASCADE;
 DROP TABLE Industry CASCADE;
+DROP TABLE DonarTotal CASCADE;
+DROP TABLE PartyTotal CASCADE;
 
 /* auto generated here */
-
 CREATE TABLE Branch
 (
   id       serial  NOT NULL,
   name     varchar NOT NULL,
-  party_id bigint,
+  party_id integer,
   PRIMARY KEY (id)
 );
 
@@ -18,17 +19,17 @@ CREATE TABLE Donar
 (
   id          serial  NOT NULL,
   name        varchar NOT NULL,
-  industry_id bigint,
+  industry_id integer,
   PRIMARY KEY (id)
 );
 
 CREATE TABLE Donation
 (
-  id       serial  NOT NULL,
-  year     varchar NOT NULL,
-  amount   bigint  NOT NULL,
-  branch_id bigint  NOT NULL,
-  donar_id bigint  NOT NULL,
+  id        serial  NOT NULL,
+  year      varchar NOT NULL,
+  amount    bigint  NOT NULL,
+  branch_id integer  NOT NULL,
+  donar_id  integer  NOT NULL,
   PRIMARY KEY (id)
 );
 
@@ -65,7 +66,6 @@ ALTER TABLE Donation
   ADD CONSTRAINT FK_Donar_TO_Donation
     FOREIGN KEY (donar_id)
     REFERENCES Donar (id);
-
 /* ends here */
 
 /* extra constraints */

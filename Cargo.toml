@@ -2,6 +2,7 @@
 name = "donation_transparency"
 version = "0.1.0"
 edition = "2024"
+rust-version = "1.85.0"
 
 [dependencies]
 sqlx = { version = "0.8", features = ["runtime-tokio-native-tls", "postgres"] }
