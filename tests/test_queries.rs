@@ -4,8 +4,6 @@ mod tests {
 
     use donation_transparency::queries::*;
 
-    const MILLION: i64 = 1000000;
-
     #[tokio::test]
     async fn test_get_all_parties_returns_some() {
         let db = init_db().await;
@@ -16,40 +14,64 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn test_get_all_donations_for_party() {
-        let idx = 19;
-
+    async fn test_all_donations() {
         let db = init_db().await;
-        let parties = all_parties(&db).await.unwrap();
-        let party_id = parties[idx].id;
-        let donations = all_donations(&db, party_id).await.unwrap();
-
-        println!("Party {} has the following donations:", parties[idx].name);
-        for (year, total) in donations {
-            println!("{}: ${} million", year, total / MILLION);
-        }
+        let donations = all_donations(&db).await.unwrap();
+        assert!(
+            !donations.is_empty(),
+            "Expected some donations in the database"
+        );
     }
 
     #[tokio::test]
-    async fn test_get_all_donations_for_donar() {
-        let idx = 19;
-        let financial_year = "2022-23";
-
+    async fn test_get_donation_by_id() {
         let db = init_db().await;
-        let parties = all_parties(&db).await.unwrap();
-        let party_id = parties[idx].id;
-        let donations =
-            donations_grouped_by_donar_for_year(&db, party_id, financial_year.to_string())
-                .await
-                .unwrap();
-
-        println!(
-            "Party {} has the following donations for year {}:",
-            parties[idx].name, financial_year
+        let donation = donar_by_id(&db, 1).await.unwrap();
+        assert!(
+            donation.is_some(),
+            "Expected a donation with id 1 to exist in the database"
         );
-        for (donar, total) in donations {
-            println!("{}: ${}", donar, total);
-        }
+    }
+
+    #[tokio::test]
+    async fn test_all_party_donations_grouped_by_donar() {
+        let db = init_db().await;
+        let donations = all_party_donations_grouped_by_donar(&db, 1, &"2022-23".to_string())
+            .await
+            .unwrap();
+        assert!(
+            !donations.is_empty(),
+            "Expected some donations in the database"
+        );
+    }
+
+    #[tokio::test]
+    async fn test_all_donar_donations() {
+        let db = init_db().await;
+        let years = vec!["2022-23".to_string()];
+        let donations = all_donar_donations(&db, 1, &years).await.unwrap();
+        assert!(
+            !donations.is_empty(),
+            "Expected some donations in the database"
+        );
+    }
+
+    #[tokio::test]
+    async fn test_all_donars() {
+        let db = init_db().await;
+        let donars = all_donars(&db).await.unwrap();
+        assert!(!donars.is_empty(), "Expected some donars in the database");
+    }
+
+    #[tokio::test]
+    async fn test_all_parties_branchs() {
+        let db = init_db().await;
+        let party = party_by_id(&db, 1).await.unwrap().unwrap();
+        let branches = all_parties_branchs(&db, party).await.unwrap();
+        assert!(
+            !branches.is_empty(),
+            "Expected some branches for party with id 1 in the database"
+        );
     }
 
     #[tokio::test]
