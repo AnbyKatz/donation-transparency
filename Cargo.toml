@@ -14,7 +14,6 @@ sea-orm = { version = "*", features = [
     "sqlx-postgres",
     "runtime-async-std-native-tls",
     "macros",
-    "debug-print",
 ] }
 futures = { version = "*" }
 csv = { version = "*" }
