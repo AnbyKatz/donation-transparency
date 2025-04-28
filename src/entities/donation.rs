@@ -10,7 +10,7 @@ pub struct Model {
     pub year: String,
     pub amount: i64,
     pub branch_id: i32,
-    pub donar_id: i32,
+    pub donor_id: i32,
 }
 
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
@@ -24,13 +24,13 @@ pub enum Relation {
     )]
     Branch,
     #[sea_orm(
-        belongs_to = "super::donar::Entity",
-        from = "Column::DonarId",
-        to = "super::donar::Column::Id",
+        belongs_to = "super::donor::Entity",
+        from = "Column::DonorId",
+        to = "super::donor::Column::Id",
         on_update = "NoAction",
         on_delete = "NoAction"
     )]
-    Donar,
+    Donor,
 }
 
 impl Related<super::branch::Entity> for Entity {
@@ -39,9 +39,9 @@ impl Related<super::branch::Entity> for Entity {
     }
 }
 
-impl Related<super::donar::Entity> for Entity {
+impl Related<super::donor::Entity> for Entity {
     fn to() -> RelationDef {
-        Relation::Donar.def()
+        Relation::Donor.def()
     }
 }
 

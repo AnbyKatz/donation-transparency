@@ -84,7 +84,7 @@
       },
       "ZB0d1BQKlOQsFAT4yEuYt": {
         "id": "ZB0d1BQKlOQsFAT4yEuYt",
-        "name": "Donar",
+        "name": "Donor",
         "comment": "",
         "columnIds": [
           "q4DPATOpdGVFEUwOaKNT2",
@@ -203,7 +203,7 @@
       },
       "88Eh0lo1QUP0VRk71ndwj": {
         "id": "88Eh0lo1QUP0VRk71ndwj",
-        "name": "DonarTotal",
+        "name": "DonorTotal",
         "comment": "",
         "columnIds": [
           "Fj6CLZyt7kov_AiBV5Tuu",
@@ -466,7 +466,7 @@
       "sz9NRhRI2xmug__m3tyuq": {
         "id": "sz9NRhRI2xmug__m3tyuq",
         "tableId": "e9RI-7COAzLsoHVSTBKh_",
-        "name": "donar_id",
+        "name": "donor_id",
         "comment": "",
         "dataType": "INTEGER",
         "default": "",
@@ -566,7 +566,7 @@
       "W7umqfJ6sjM-FZWnlrvc3": {
         "id": "W7umqfJ6sjM-FZWnlrvc3",
         "tableId": "e9RI-7COAzLsoHVSTBKh_",
-        "name": "donar_id",
+        "name": "donor_id",
         "comment": "",
         "dataType": "serial",
         "default": "",
@@ -866,7 +866,7 @@
       "tsg2kGTAZP5B6dLiF2NvF": {
         "id": "tsg2kGTAZP5B6dLiF2NvF",
         "tableId": "e9RI-7COAzLsoHVSTBKh_",
-        "name": "donar_id",
+        "name": "donor_id",
         "comment": "",
         "dataType": "serial",
         "default": "",
@@ -926,7 +926,7 @@
       "kAC3IYDYiju-NiC3O-eYU": {
         "id": "kAC3IYDYiju-NiC3O-eYU",
         "tableId": "88Eh0lo1QUP0VRk71ndwj",
-        "name": "donar_id",
+        "name": "donor_id",
         "comment": "",
         "dataType": "serial",
         "default": "",

@@ -3,7 +3,7 @@
 pub mod prelude;
 
 pub mod branch;
-pub mod donar;
 pub mod donation;
+pub mod donor;
 pub mod industry;
 pub mod party;

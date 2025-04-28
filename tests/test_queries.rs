@@ -26,7 +26,7 @@ mod tests {
     #[tokio::test]
     async fn test_get_donation_by_id() {
         let db = init_db().await;
-        let donation = donar_by_id(&db, 1).await.unwrap();
+        let donation = donor_by_id(&db, 1).await.unwrap();
         assert!(
             donation.is_some(),
             "Expected a donation with id 1 to exist in the database"
@@ -34,9 +34,9 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn test_all_party_donations_grouped_by_donar() {
+    async fn test_all_party_donations_grouped_by_donor() {
         let db = init_db().await;
-        let donations = all_party_donations_grouped_by_donar(&db, 1, &"2022-23".to_string())
+        let donations = all_party_donations_grouped_by_donor(&db, 1, &"2022-23".to_string())
             .await
             .unwrap();
         assert!(
@@ -46,10 +46,10 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn test_all_donar_donations() {
+    async fn test_all_donor_donations() {
         let db = init_db().await;
         let years = vec!["2022-23".to_string()];
-        let donations = all_donar_donations(&db, 1, &years).await.unwrap();
+        let donations = all_donor_donations(&db, 1, &years).await.unwrap();
         assert!(
             !donations.is_empty(),
             "Expected some donations in the database"
@@ -57,10 +57,10 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn test_all_donars() {
+    async fn test_all_donors() {
         let db = init_db().await;
-        let donars = all_donars(&db).await.unwrap();
-        assert!(!donars.is_empty(), "Expected some donars in the database");
+        let donors = all_donors(&db).await.unwrap();
+        assert!(!donors.is_empty(), "Expected some donors in the database");
     }
 
     #[tokio::test]
