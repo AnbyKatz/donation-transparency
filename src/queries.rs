@@ -18,9 +18,11 @@ pub struct DonationAdapter {
     pub amount: i64,
 }
 
-pub async fn all_donations(db: &DbConn) -> Result<Vec<DonationAdapter>, DbErr> {
-    let results = DonationAdapter::find_by_statement(sea_orm::Statement::from_sql_and_values(
-        sea_orm::DatabaseBackend::Postgres,
+pub async fn all_donations(
+    db: &DbConn,
+    financial_year: &str,
+) -> Result<Vec<DonationAdapter>, DbErr> {
+    let query_string = format!(
         r#"
             SELECT 
                 donation.year AS financial_year,
@@ -32,7 +34,13 @@ pub async fn all_donations(db: &DbConn) -> Result<Vec<DonationAdapter>, DbErr> {
             JOIN branch b ON b.id = donation.branch_id
             JOIN donor d ON d.id = donation.donor_id
             JOIN party p ON p.id = b.party_id
+            WHERE donation.year = '{}'
         "#,
+        financial_year
+    );
+    let results = DonationAdapter::find_by_statement(sea_orm::Statement::from_sql_and_values(
+        sea_orm::DatabaseBackend::Postgres,
+        query_string,
         [],
     ))
     .all(db)

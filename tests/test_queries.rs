@@ -16,7 +16,7 @@ mod tests {
     #[tokio::test]
     async fn test_all_donations() {
         let db = init_db().await;
-        let donations = all_donations(&db).await.unwrap();
+        let donations = all_donations(&db, "2022-23").await.unwrap();
         assert!(
             !donations.is_empty(),
             "Expected some donations in the database"
