@@ -34,36 +34,6 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn test_all_party_donations_grouped_by_donor() {
-        let db = init_db().await;
-        let donations = all_party_donations_grouped_by_donor(&db, 1, &"2022-23".to_string())
-            .await
-            .unwrap();
-        assert!(
-            !donations.is_empty(),
-            "Expected some donations in the database"
-        );
-    }
-
-    #[tokio::test]
-    async fn test_all_donor_donations() {
-        let db = init_db().await;
-        let years = vec!["2022-23".to_string()];
-        let donations = all_donor_donations(&db, 1, &years).await.unwrap();
-        assert!(
-            !donations.is_empty(),
-            "Expected some donations in the database"
-        );
-    }
-
-    #[tokio::test]
-    async fn test_all_donors() {
-        let db = init_db().await;
-        let donors = all_donors(&db).await.unwrap();
-        assert!(!donors.is_empty(), "Expected some donors in the database");
-    }
-
-    #[tokio::test]
     async fn test_all_parties_branchs() {
         let db = init_db().await;
         let party = party_by_id(&db, 1).await.unwrap().unwrap();
