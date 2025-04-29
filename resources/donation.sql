@@ -118,6 +118,12 @@ FROM Party
 WHERE POSITION(LOWER(Party.name) IN LOWER(Branch.name)) > 0
   AND Branch.name NOT IN (SELECT * FROM temp_excluded_data);
 
+/* Left over branches that weren't on the aggregate list */
+INSERT INTO Party (name)
+  SELECT DISTINCT name FROM Branch
+  WHERE party_id is NULL;
+
+
 /* Insert Join */
 INSERT INTO Donation (year, amount, branch_id, donor_id)
 SELECT 
