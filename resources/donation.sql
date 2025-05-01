@@ -21,7 +21,6 @@ CREATE TABLE Donor
 (
   id          serial  NOT NULL,
   name        varchar NOT NULL,
-  industry_id integer,
   PRIMARY KEY (id)
 );
 

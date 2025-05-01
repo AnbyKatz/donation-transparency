@@ -91,8 +91,6 @@ pub async fn all_parties_branchs(
     single_party.find_related(Branch).all(db).await
 }
 
-pub async fn all_donor_donations_grouped_by_party(db: &DbConn, donor_id: i32) {}
-
 pub async fn party_by_id(db: &DbConn, id: i32) -> Result<Option<party::Model>, DbErr> {
     party::Entity::find_by_id(id).one(db).await
 }
