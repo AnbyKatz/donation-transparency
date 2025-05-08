@@ -24,7 +24,7 @@ pub async fn all_donations(
 ) -> Result<Vec<DonationAdapter>, DbErr> {
     let query_string = format!(
         r#"
-            SELECT 
+            SELECT
                 donation.year AS financial_year,
                 donation.amount,
                 p.name AS party_name,
@@ -82,6 +82,38 @@ pub async fn all_financial_years(db: &DbConn) -> Result<Vec<String>, DbErr> {
         .into_tuple::<String>()
         .all(db)
         .await
+}
+
+pub async fn all_donor_donations_for_financial_year(
+    db: &DbConn,
+    donor_id: i32,
+    financial_year: &str,
+) -> Result<Vec<DonationAdapter>, DbErr> {
+    let query_string = format!(
+        r#"
+            SELECT
+                donation.year AS financial_year,
+                donation.amount,
+                p.name AS party_name,
+                b.name AS branch_name,
+                d.name AS donor_name
+            FROM donation
+            JOIN branch b ON b.id = donation.branch_id
+            JOIN donor d ON d.id = donation.donor_id
+            JOIN party p ON p.id = b.party_id
+            WHERE donation.year = '{}' AND donation.donor_id = {}
+        "#,
+        financial_year, donor_id
+    );
+    let results = DonationAdapter::find_by_statement(sea_orm::Statement::from_sql_and_values(
+        sea_orm::DatabaseBackend::Postgres,
+        query_string,
+        [],
+    ))
+    .all(db)
+    .await?;
+
+    Ok(results)
 }
 
 pub async fn all_parties_branchs(

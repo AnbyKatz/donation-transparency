@@ -7,9 +7,7 @@ mod tests {
     #[tokio::test]
     async fn test_get_all_parties_returns_some() {
         let db = init_db().await;
-
         let parties = all_parties(&db).await.unwrap();
-
         assert!(!parties.is_empty(), "Expected some parties in the database");
     }
 
@@ -45,10 +43,12 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn test_get_all_financial_years() {
+    async fn test_get_donor_donations() {
         let db = init_db().await;
-        let years = all_financial_years(&db).await.unwrap();
-        println!("Found {} financial years", years.len());
+        let donor_donations = all_donor_donations_for_financial_year(&db, 12610, "2023-24")
+            .await
+            .unwrap();
+        assert!(!donor_donations.is_empty(), "Missing donations for donor");
     }
 
     async fn init_db() -> DatabaseConnection {
