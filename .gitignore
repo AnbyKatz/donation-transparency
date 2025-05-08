@@ -2,3 +2,4 @@ target/
 resources/DetailedReceipts.csv
 .vscode/
 .env
+.zed/*

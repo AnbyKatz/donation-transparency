@@ -5,8 +5,6 @@ edition = "2024"
 rust-version = "1.85.0"
 
 [dependencies]
-sqlx = { version = "*", features = ["runtime-tokio-native-tls", "postgres"] }
-tokio = { version = "*", features = ["full"] }
 serde = { version = "*", features = ["derive"] }
 dotenv = { version = "*" }
 log = { version = "*" }
@@ -15,10 +13,10 @@ sea-orm = { version = "*", features = [
     "runtime-async-std-native-tls",
     "macros",
 ] }
-futures = { version = "*" }
 csv = { version = "*" }
-tracing-subscriber = { version = "*" }
-tracing = { version = "*" }
+async-std = { version = "*", features = ["attributes"] }
+toml = { version = "*" }
 
-[build-dependencies]
+[dev-dependencies]
 sqlx-cli = { version = "*" }
+tokio = { version = "*", features = ["full"] }
