@@ -18,6 +18,7 @@ pub struct DonationAdapter {
     pub amount: i64,
 }
 
+/// All donations for a single financial year
 pub async fn all_donations(
     db: &DbConn,
     financial_year: &str,
@@ -49,6 +50,7 @@ pub async fn all_donations(
     Ok(results)
 }
 
+/// All donations for a single party for a collection of financial years
 pub async fn all_party_donations(
     db: &DbConn,
     party_id: i32,
@@ -69,10 +71,12 @@ pub async fn all_party_donations(
     Ok(total_donations_by_year)
 }
 
+/// All currently listed parties
 pub async fn all_parties(db: &DbConn) -> Result<Vec<party::Model>, DbErr> {
     party::Entity::find().all(db).await
 }
 
+/// All currently reported financial years, subject to AEC updating their data
 pub async fn all_financial_years(db: &DbConn) -> Result<Vec<String>, DbErr> {
     donation::Entity::find()
         .select_only()
@@ -84,6 +88,7 @@ pub async fn all_financial_years(db: &DbConn) -> Result<Vec<String>, DbErr> {
         .await
 }
 
+/// All donor donations for a single financial year
 pub async fn all_donor_donations_for_financial_year(
     db: &DbConn,
     donor_id: i32,
@@ -116,6 +121,7 @@ pub async fn all_donor_donations_for_financial_year(
     Ok(results)
 }
 
+/// Given a party, get all their branches
 pub async fn all_parties_branchs(
     db: &DbConn,
     single_party: party::Model,
@@ -131,6 +137,9 @@ pub async fn donor_by_id(db: &DbConn, id: i32) -> Result<Option<donor::Model>, D
     donor::Entity::find_by_id(id).one(db).await
 }
 
+/// Case insensitive substring search for a matching donor
+/// There's too many so generally you want to search first for a list
+/// of donors and then select a single one before querying for their donations
 pub async fn search_for_donors(
     db: &DbConn,
     search_string: &str,

@@ -3,11 +3,25 @@ use std::collections::HashMap;
 
 use crate::entities::{branch, donation};
 
+/// Get all the branch ids associated with this party
 pub async fn get_branch_ids(branches: Vec<branch::Model>) -> Result<Vec<i32>, DbErr> {
     let branch_ids: Vec<i32> = branches.into_iter().map(|b| b.id).collect();
     Ok(branch_ids)
 }
 
+/// Given an array of branch ids, corresponding to one party, and a
+/// single financial year. Find all the donations associated.
+///
+/// # Arguments
+///
+/// * `db` - Database connection
+/// * `branches` - All the queried branches, usually obtained from running
+/// `donation-transparency/src/queries::all_parties_branchs`
+/// * `financial_years` - e.g. ["2023-24", "2022-23"]
+///
+/// # Returns
+///
+/// Key => financial_year, Val => Donations
 pub async fn get_donations_for_branches(
     db: &DbConn,
     branches: Vec<branch::Model>,
