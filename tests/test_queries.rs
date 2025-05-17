@@ -5,50 +5,54 @@ mod tests {
     use donation_transparency::queries::*;
 
     #[tokio::test]
-    async fn test_get_all_parties_returns_some() {
+    async fn test_all_financial_years() {
         let db = init_db().await;
-        let parties = all_parties(&db).await.unwrap();
-        assert!(!parties.is_empty(), "Expected some parties in the database");
+        let query = all_financial_years(&db).await.unwrap();
+        assert!(!query.is_empty(), "Expected none empty result");
     }
 
     #[tokio::test]
-    async fn test_all_donations() {
+    async fn test_all_parties() {
         let db = init_db().await;
-        let donations = all_donations(&db, "2022-23").await.unwrap();
-        assert!(
-            !donations.is_empty(),
-            "Expected some donations in the database"
-        );
+        let query = all_parties(&db).await.unwrap();
+        assert!(!query.is_empty(), "Expected none empty result");
     }
 
     #[tokio::test]
-    async fn test_get_donation_by_id() {
+    async fn test_donations_that_financial_year() {
         let db = init_db().await;
-        let donation = donor_by_id(&db, 1).await.unwrap();
-        assert!(
-            donation.is_some(),
-            "Expected a donation with id 1 to exist in the database"
-        );
+        let query = donations_that_financial_year(&db, "2023-24").await.unwrap();
+        assert!(!query.is_empty(), "Expected none empty result");
     }
 
     #[tokio::test]
-    async fn test_all_parties_branchs() {
+    async fn test_search_for_donor() {
         let db = init_db().await;
-        let party = party_by_id(&db, 1).await.unwrap().unwrap();
-        let branches = all_parties_branchs(&db, party).await.unwrap();
-        assert!(
-            !branches.is_empty(),
-            "Expected some branches for party with id 1 in the database"
-        );
+        let query = search_for_donors(&db, "common%").await.unwrap();
+        assert!(!query.is_empty(), "Expected none empty result");
     }
 
     #[tokio::test]
-    async fn test_get_donor_donations() {
+    async fn test_all_party_donations() {
         let db = init_db().await;
-        let donor_donations = all_donor_donations_for_financial_year(&db, 12610, "2023-24")
-            .await
-            .unwrap();
-        assert!(!donor_donations.is_empty(), "Missing donations for donor");
+        let years_query = all_financial_years(&db).await.unwrap();
+        let query = all_party_donations(&db, 1, &years_query).await.unwrap();
+        assert!(!query.is_empty(), "Expected none empty result");
+    }
+
+    #[tokio::test]
+    async fn test_all_party_branches() {
+        let db = init_db().await;
+        let query = all_party_branches(&db, 1).await.unwrap();
+        assert!(!query.is_empty(), "Expected none empty result");
+    }
+
+    #[tokio::test]
+    async fn test_all_donor_donations() {
+        let db = init_db().await;
+        let years_query = all_financial_years(&db).await.unwrap();
+        let query = all_donor_donations(&db, 6240, &years_query).await.unwrap();
+        assert!(!query.is_empty(), "Expected none empty result");
     }
 
     async fn init_db() -> DatabaseConnection {

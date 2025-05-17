@@ -2,7 +2,6 @@ use log::info;
 use sea_orm::{Database, DatabaseConnection};
 use std::env;
 
-mod helpers;
 mod statistics;
 
 pub mod entities;
